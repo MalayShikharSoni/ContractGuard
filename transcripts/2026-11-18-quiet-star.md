@@ -5,8 +5,8 @@
 | Session | `ses_e11ada968ffe31OZH1MFBhFJ5t` (slug: quiet-star) |
 | Started | 2026-11-18 11:02:16 UTC |
 | Model | bifrost/vultr/glm-5.3-flash · agent: build |
-| Messages | 302 in the raw export |
-| Generated | 2026-11-18 15:30:15 UTC from the local OpenCode session store |
+| Messages | 310 in the raw export |
+| Generated | 2026-11-18 15:32:04 UTC from the local OpenCode session store |
 
 **About this transcript.** User and assistant prose is verbatim. Tool calls are summarised
 as one-liners (their full inputs/outputs live in the companion `.raw.json`). Model reasoning
@@ -1662,5 +1662,63 @@ Provider parsed but `modelID` didn't. Quick check of the actual shape:
 > 🔧 `shell` — node --experimental-sqlite -e "const{DatabaseSync}=require('node:sqlite');const db=new DatabaseSync(process.env.USERPROFILE+'/.local/share/opencode/opencode.db',{readOnly:true});console.log(db.prepare('SELECT model FROM … *(completed)*
 
 > 🔧 `edit` — C:\Projects\sde-startup-kit-20261118T102601Z-1-001\sde-startup-kit\contract-guard-starter-kit\contract-guard-starter-kit\transcripts\make-transcript.cjs *(completed)*
+
+> 🔧 `shell` — node --experimental-sqlite "C:\Projects\sde-startup-kit-20261118T102601Z-1-001\sde-startup-kit\contract-guard-starter-kit\contract-guard-starter-kit\transcripts\make-transcript.cjs" $env:OPENCODE_SESSION_ID 2>$null; Sele… *(completed)*
+
+## Assistant <sub>2026-11-18 15:30:15 UTC</sub>
+
+Model line fixed. Adding a short README for the folder, linking it from the main docs table, then committing:
+
+> 🔧 `write` — C:\Projects\sde-startup-kit-20261118T102601Z-1-001\sde-startup-kit\contract-guard-starter-kit\contract-guard-starter-kit\transcripts\README.md *(completed)*
+
+> 🔧 `edit` — C:\Projects\sde-startup-kit-20261118T102601Z-1-001\sde-startup-kit\contract-guard-starter-kit\contract-guard-starter-kit\README.md *(completed)*
+
+> 🔧 `shell` — $root = "C:\Projects\sde-startup-kit-20261118T102601Z-1-001\sde-startup-kit\contract-guard-starter-kit\contract-guard-starter-kit"; git -C $root add transcripts README.md; git -C $root commit -m "Add chat transcripts: re… *(completed)*
+
+## Assistant <sub>2026-11-18 15:30:28 UTC</sub>
+
+Done — this chat's transcript is now in the repo, committed as `f621d76`. Here's the full picture:
+
+## What's in the repo now
+
+```
+transcripts/
+  2026-11-18-quiet-star.md        127 KB — readable transcript of this session
+  2026-11-18-quiet-star.raw.json  3.4 MB — verbatim export (every message)
+  make-transcript.cjs             the exporter script
+  README.md                       usage notes
+```
+
+- **The `.md`** is what you'd share/review: your messages and my prose verbatim, each turn timestamped; all 300 tool calls rendered as one-liners (`> 🔧 shell — git status --short *(completed)*`); model reasoning omitted; harness-injected context blocks collapsed into `<details>`.
+- **The `.raw.json`** is lossless: all 299 messages including reasoning, full tool inputs/outputs, token/cost metadata — and it's re-importable into OpenCode later with `opencode import`.
+- README's docs table links the folder.
+
+## How to export a chat (the repeatable way)
+
+```powershell
+node --experimental-sqlite transcripts/make-transcript.cjs $env:OPENCODE_SESSION_ID
+```
+
+The current session's id is always in `$env:OPENCODE_SESSION_ID` (for older chats, `opencode session list` shows ids). The script snapshots `~/.local/share/opencode/opencode.db` (SQLite) to a temp dir and reads only the copy — safe to run while OpenCode is open, needs Node ≥ 22.5. Then `git add transcripts && git commit`.
+
+## One heads-up about the built-in command
+
+`opencode export <sessionID>` (which produces just the JSON) currently fails in this install with *"Database is not empty and has no session table"* — a schema mismatch between the CLI's expected layout and the `session_v2` table the live store uses. The bundled script reads the actual schema directly, which is why it works. If a future `opencode upgrade` fixes `export`, you can use it the same way and commit its output to this folder.
+
+Two notes: the transcript captures everything up to the point the script ran, so this very message isn't in it — re-running the script would refresh the files (I kept the filenames date+slug-stable, so a re-run just updates them). And the repo has since gained a `.gitignore` commit of yours (`b315d77`) — the transcripts don't collide with it; the working tree is clean.
+
+## User <sub>2026-11-18 15:31:41 UTC</sub>
+
+did you export all the chat from here ?
+
+## Assistant <sub>2026-11-18 15:31:41 UTC</sub>
+
+Good question to pin down precisely. The export ran **before** my final reply in the previous turn — so the last summary message and this current exchange were not in it. Let me check the current message count and refresh the export so it truly covers everything:
+
+> 🔧 `shell` — node --experimental-sqlite -e "const{DatabaseSync}=require('node:sqlite');const db=new DatabaseSync(process.env.USERPROFILE+'/.local/share/opencode/opencode.db',{readOnly:true});const c=db.prepare('SELECT type, COUNT(*) … *(completed)*
+
+## Assistant <sub>2026-11-18 15:31:59 UTC</sub>
+
+The DB now holds **309 messages** (the committed export had 299 — 10 newer messages are missing, including the previous turn's closing summary and this very question). Re-running the exporter to make it complete:
 
 > 🔧 `shell` — node --experimental-sqlite "C:\Projects\sde-startup-kit-20261118T102601Z-1-001\sde-startup-kit\contract-guard-starter-kit\contract-guard-starter-kit\transcripts\make-transcript.cjs" $env:OPENCODE_SESSION_ID 2>$null; Sele… *(running)*
