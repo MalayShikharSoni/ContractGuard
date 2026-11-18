@@ -58,6 +58,7 @@ notifications all exist out of the box. With the kit data that means 7 published
 | [`PLAN.md`](PLAN.md) | The original problem statement and PO Q&A |
 | [`DECISIONS.md`](DECISIONS.md) | PO answers (verbatim record) |
 | [`PROGRESS.md`](PROGRESS.md) | Build log: what was delivered, in order, with verification evidence and fixes |
+| [`transcripts/`](transcripts/README.md) | Chat transcripts of the sessions that built this kit (readable `.md` + verbatim `.raw.json`) |
 
 ## HTTP API (summary)
 
