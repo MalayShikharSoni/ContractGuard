@@ -62,6 +62,7 @@ export function flattenSpec(doc) {
         operationId: op.operationId || null,
         summary: op.summary || null,
         deprecated: op.deprecated === true,
+        sunset: typeof op['x-sunset'] === 'string' ? op['x-sunset'] : undefined,
         internal,
         request: flattenRequestBody(op.requestBody),
         responses: flattenResponses(op.responses),

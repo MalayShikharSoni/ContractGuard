@@ -12,7 +12,7 @@ import { sameOrAncestor, pruneToTopmost } from './pathutils.js';
  *    normalised route shape matches, so `/quotes/{id}` and `/quotes/{quoteId}` connect;
  *  - request-side changes compare against usage `sends`, response-side against `reads`;
  *  - a new REQUIRED request field/param affects every usage of the endpoint that does not
- *    already declare sending it (its parent object counts as sending it);
+ *    already declare sending the field itself or a child of it;
  *  - removed/changed fields affect usages that read/send the same node or a subtree of it;
  *  - removed endpoints/statuses affect every usage of that route.
  *

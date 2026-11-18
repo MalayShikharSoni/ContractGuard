@@ -55,7 +55,7 @@ function diffEndpoint(oldEp, newEp, changes) {
   const common = { endpoint: label, endpointKey: newEp.key, method: newEp.method, internal: newEp.internal };
 
   if (newEp.deprecated && !oldEp.deprecated) {
-    changes.push(mk({ kind: 'endpoint_deprecated', direction: 'endpoint', ...common }));
+    changes.push(mk({ kind: 'endpoint_deprecated', direction: 'endpoint', sunset: newEp.sunset, ...common }));
   }
 
   diffParams(oldEp, newEp, common, changes);

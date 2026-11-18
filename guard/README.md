@@ -103,10 +103,16 @@ the pipeline; they are logged in the notifications table and shown in the UI.
 
 ```
 cd guard
-npm test                  # engine tests: parse/resolve/flatten/diff/impact against the kit's real specs (no DB)
-npm run test:engine       # same thing
-node --test test/e2e.test.js   # against a running stack (GUARD_URL to override target); writes test data
+npm test                  # 62 pure tests, no DB: engine (15, kit scenarios), policy (19,
+                          # one per severity-table rule), pipeline (28, every stage)
+npm run test:api          # 15 supertest tests: HTTP + persistence stages vs the real DB
+                          # (needs docker compose up -d; writes test data under api-svc-*)
+npm run test:e2e          # 11 against a running stack on :9901 (GUARD_URL to override); writes test data
+npm run test:all          # everything (api + e2e need the stack)
 ```
+
+Both live suites leave test rows behind: `docker compose down -v && docker compose up -d`
+resets to the pristine seed.
 
 ## Layout
 
@@ -121,7 +127,7 @@ guard/
     ui/          static SPA (no build step)
     schema.sql   services, consumers, consumer_usages, versions, publish_attempts, notifications
     seed.js      first-boot kit import
-  test/          engine tests (pure) + e2e tests (live server)
+  test/          engine + policy + pipeline tests (pure), api tests (supertest), e2e tests (live server)
 ```
 
 Notes: local dev without Docker needs Node 20+ and `DATABASE_URL` pointing at a Postgres
