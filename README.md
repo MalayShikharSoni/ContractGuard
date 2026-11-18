@@ -53,6 +53,7 @@ notifications all exist out of the box. With the kit data that means 7 published
 | Document | Contents |
 | --- | --- |
 | [`CONTEXT.md`](CONTEXT.md) | **The complete project context** — pipeline walkthrough, dataflow, wire model, severity policy, impact rules, data model, API reference, UI navigation, operations, design decisions |
+| [`DESIGN.md`](DESIGN.md) | **Architecture definition** — context/component/runtime/data/interface/deployment views, decision records with alternatives, cross-cutting concerns, quality attributes, glossary |
 | [`guard/README.md`](guard/README.md) | The same ground from the app folder's perspective (API, policy, layout, tests) |
 | [`PLAN.md`](PLAN.md) | The original problem statement and PO Q&A |
 | [`DECISIONS.md`](DECISIONS.md) | PO answers (verbatim record) |
