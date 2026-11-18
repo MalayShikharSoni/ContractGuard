@@ -1,7 +1,52 @@
-# Contract Guard starter kit: a webhook receiver (the specs and consumer files are plain files in this folder).
+# Contract Guard starter kit.
 # Start:  docker compose up --build     (Podman: podman compose up --build)
+#
+# This starts:
+#   - Contract Guard itself (API + UI)   -> http://localhost:9901
+#   - its Postgres database              (internal)
+#   - the webhook receiver stand-in      -> http://localhost:9900  (chat/email stand-in)
+#
+# On first boot Contract Guard imports the kit's specs/ and consumers/ folders:
+# every spec version is replayed through the real publish pipeline, so versions,
+# attempts, verdicts and notifications all exist out of the box.
 services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: guard
+      POSTGRES_PASSWORD: guard
+      POSTGRES_DB: contractguard
+    volumes:
+      - guard-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U guard -d contractguard"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  guard:
+    build: ./guard
+    environment:
+      PORT: "3000"
+      DATABASE_URL: postgres://guard:guard@db:5432/contractguard
+      WEBHOOK_URL: http://webhook-receiver:9000/contract-guard
+      SEED_DIR: /kit
+      SEED_ON_BOOT: "1"
+    volumes:
+      - ./specs:/kit/specs:ro
+      - ./consumers:/kit/consumers:ro
+    ports:
+      - "${GUARD_PORT:-9901}:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+      webhook-receiver:
+        condition: service_started
+
   webhook-receiver:
     build: ./webhook-receiver
     environment: { PORT: "9000" }
     ports: ["${WEBHOOK_PORT:-9900}:9000"]  # host port: 9900 by default, override with WEBHOOK_PORT
+
+volumes:
+  guard-db:

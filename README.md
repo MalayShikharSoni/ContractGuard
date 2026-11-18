@@ -49,3 +49,12 @@ Field paths use dots for nested fields and `[]` for items in a list. Consumer fi
 
 - **Don't change the files in `specs/` or `consumers/`**: the evaluators test your product against the original kit. Copy them if you want to experiment.
 - How Contract Guard reads these files (upload through your API or UI, import from the folder, or both) is your decision.
+
+## The built Contract Guard (in `guard/`)
+
+`docker compose up --build` from this folder starts the finished product alongside the webhook receiver:
+
+- **Contract Guard** — http://localhost:9901 (API + UI; seeds itself from `specs/` and `consumers/` on first boot)
+- **Webhook receiver** — http://localhost:9900 (unchanged; Contract Guard POSTs publish outcomes there)
+
+See `guard/README.md` for the full API, severity policy and design notes.

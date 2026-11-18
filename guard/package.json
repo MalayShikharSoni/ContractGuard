@@ -1,0 +1,20 @@
+{
+  "name": "contract-guard",
+  "version": "1.0.0",
+  "description": "API contract registry: version specs, detect breaking changes, track affected consumers, block dangerous publishes.",
+  "type": "module",
+  "main": "src/index.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test test/",
+    "test:engine": "node --test test/engine.test.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "js-yaml": "^4.1.0",
+    "pg": "^8.13.0"
+  }
+}
